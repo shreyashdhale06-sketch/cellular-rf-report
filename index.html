@@ -36,22 +36,22 @@
             <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
                 <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Frequency Reuse Factor</p>
                 <h3 class="text-2xl font-black text-white mt-2">7 / 21</h3>
-                <span class="text-xs text-indigo-400 font-medium mt-1 block">Cluster Size $N = 7$</span>
+                <span class="text-xs text-indigo-400 font-medium mt-1 block">Cluster Size N = 7</span>
             </div>
             <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Urban Cell Radius ($R$)</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Urban Cell Radius (R)</p>
                 <h3 class="text-2xl font-black text-white mt-2">0.5 km</h3>
                 <span class="text-xs text-amber-400 font-medium mt-1 block">High Capacity Density</span>
             </div>
             <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Suburban Cell Radius ($R$)</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Suburban Cell Radius (R)</p>
                 <h3 class="text-2xl font-black text-white mt-2">1.5 km</h3>
                 <span class="text-xs text-emerald-400 font-medium mt-1 block">Balanced Coverage</span>
             </div>
             <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Co-Channel Ratio ($Q$)</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Co-Channel Ratio (Q)</p>
                 <h3 class="text-2xl font-black text-white mt-2">4.58</h3>
-                <span class="text-xs text-purple-400 font-medium mt-1 block">SIR $\approx 18.3$ dB</span>
+                <span class="text-xs text-purple-400 font-medium mt-1 block">SIR &approx; 18.3 dB</span>
             </div>
         </div>
 
@@ -66,15 +66,15 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
                 <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
                     <h4 class="font-bold text-indigo-400 text-sm mb-1">Dense Urban Core</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius ($R$) = <strong>500 m</strong>[cite: 32]. Maximizes frequency reuse and subscriber capacity in high-rise commercial zones.</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius (R) = <strong>500 m</strong>. Maximizes frequency reuse and subscriber capacity in high-rise commercial zones.</p>
                 </div>
                 <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
                     <h4 class="font-bold text-emerald-400 text-sm mb-1">Suburban Residential</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius ($R$) = <strong>1.5 km</strong>. Optimized for medium subscriber density and wider coverage footprints.</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius (R) = <strong>1.5 km</strong>. Optimized for medium subscriber density and wider coverage footprints.</p>
                 </div>
                 <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
                     <h4 class="font-bold text-amber-400 text-sm mb-1">Open / Highway Area</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius ($R$) = <strong>3.0 km</strong>. Extended range coverage with minimal terrain obstruction.</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius (R) = <strong>3.0 km</strong>. Extended range coverage with minimal terrain obstruction.</p>
                 </div>
             </div>
         </section>
@@ -85,7 +85,7 @@
                 <span>🔢</span> 2. GSM 900 MHz Frequency Planning & Reuse
             </h2>
             <p class="text-sm text-slate-300 leading-relaxed">
-                Operating in the <strong>GSM 900 MHz band</strong> (uplink: 890–915 MHz, downlink: 935–960 MHz) with a 200 kHz channel bandwidth yields 124 total RF channels. Utilizing a <strong>7-cell frequency reuse pattern ($N=7$)</strong> with 3-sector base stations ($7 \times 3 = 21$ channel groups):
+                Operating in the <strong>GSM 900 MHz band</strong> (uplink: 890–915 MHz, downlink: 935–960 MHz) with a 200 kHz channel bandwidth yields 124 total RF channels. Utilizing a <strong>7-cell frequency reuse pattern (N=7)</strong> with 3-sector base stations (7 &times; 3 = 21 channel groups):
             </p>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs text-slate-300 border-collapse">
@@ -93,8 +93,8 @@
                         <tr>
                             <th class="p-3 border border-slate-700">Cell Cluster ID</th>
                             <th class="p-3 border border-slate-700">Assigned Channel Groups</th>
-                            <th class="p-3 border border-slate-700">Reuse Distance ($D$)</th>
-                            <th class="p-3 border border-slate-700">Co-Channel Reuse Ratio ($Q = D/R$)</th>
+                            <th class="p-3 border border-slate-700">Reuse Distance (D)</th>
+                            <th class="p-3 border border-slate-700">Co-Channel Reuse Ratio (Q = D/R)</th>
                             <th class="p-3 border border-slate-700">Estimated SIR (dB)</th>
                         </tr>
                     </thead>
@@ -102,21 +102,21 @@
                         <tr class="hover:bg-slate-750">
                             <td class="p-3 border border-slate-700 font-bold text-indigo-400">Cell C1</td>
                             <td class="p-3 border border-slate-700">Groups 1A, 1B, 1C</td>
-                            <td class="p-3 border border-slate-700">4.58 $R$</td>
+                            <td class="p-3 border border-slate-700">4.58 R</td>
                             <td class="p-3 border border-slate-700">4.58</td>
                             <td class="p-3 border border-slate-700 text-emerald-400 font-bold">18.3 dB</td>
                         </tr>
                         <tr class="hover:bg-slate-750">
                             <td class="p-3 border border-slate-700 font-bold text-indigo-400">Cell C2</td>
                             <td class="p-3 border border-slate-700">Groups 2A, 2B, 2C</td>
-                            <td class="p-3 border border-slate-700">4.58 $R$</td>
+                            <td class="p-3 border border-slate-700">4.58 R</td>
                             <td class="p-3 border border-slate-700">4.58</td>
                             <td class="p-3 border border-slate-700 text-emerald-400 font-bold">18.3 dB</td>
                         </tr>
                         <tr class="hover:bg-slate-750">
                             <td class="p-3 border border-slate-700 font-bold text-indigo-400">Cell C3 - C7</td>
                             <td class="p-3 border border-slate-700">Groups 3 through 7</td>
-                            <td class="p-3 border border-slate-700">4.58 $R$</td>
+                            <td class="p-3 border border-slate-700">4.58 R</td>
                             <td class="p-3 border border-slate-700">4.58</td>
                             <td class="p-3 border border-slate-700 text-emerald-400 font-bold">18.3 dB</td>
                         </tr>
@@ -147,19 +147,19 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1">Frequency ($f$): <span id="freqVal">900</span> MHz</label>
+                        <label class="block text-xs text-slate-400 mb-1">Frequency (f): <span id="freqVal">900</span> MHz</label>
                         <input type="range" id="freqInput" min="850" max="960" value="900" class="w-full accent-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1">Base Station Antenna Height ($h_{te}$): <span id="hteVal">30</span> m</label>
+                        <label class="block text-xs text-slate-400 mb-1">Base Station Antenna Height (h<sub>te</sub>): <span id="hteVal">30</span> m</label>
                         <input type="range" id="hteInput" min="20" max="100" value="30" class="w-full accent-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1">Mobile Receiver Height ($h_{re}$): <span id="hreVal">1.5</span> m</label>
+                        <label class="block text-xs text-slate-400 mb-1">Mobile Receiver Height (h<sub>re</sub>): <span id="hreVal">1.5</span> m</label>
                         <input type="range" id="hreInput" min="1" max="3" value="1.5" step="0.5" class="w-full accent-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1">Distance to Cell Edge ($d$): <span id="distVal">1.0</span> km</label>
+                        <label class="block text-xs text-slate-400 mb-1">Distance to Cell Edge (d): <span id="distVal">1.0</span> km</label>
                         <input type="range" id="distInput" min="0.2" max="5.0" value="1.0" step="0.1" class="w-full accent-indigo-500">
                     </div>
                     <button onclick="calculateHata()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-lg text-xs transition cursor-pointer">
@@ -171,11 +171,11 @@
                 <div class="lg:col-span-2 space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
-                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Path Loss ($L_{50}$)</span>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Path Loss (L<sub>50</sub>)</span>
                             <span id="resPathLoss" class="text-xl font-black text-indigo-400 mt-1 block">-- dB</span>
                         </div>
                         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
-                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Received Power ($P_r$)</span>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Received Power (P<sub>r</sub>)</span>
                             <span id="resRxPower" class="text-xl font-black text-emerald-400 mt-1 block">-- dBm</span>
                         </div>
                         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
@@ -197,7 +197,7 @@
                 <span>📡</span> 4. Base Station Antenna Configuration
             </h2>
             <p class="text-sm text-slate-300 leading-relaxed">
-                To optimize spatial coverage and suppress inter-cell interference, a 3-sector antenna configuration is deployed per base station site[cite: 32].
+                To optimize spatial coverage and suppress inter-cell interference, a 3-sector antenna configuration is deployed per base station site.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
@@ -236,7 +236,7 @@
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-2">
                     <h4 class="font-bold text-amber-400 text-base">Interference Mitigation</h4>
                     <p class="text-xs text-slate-400 leading-relaxed">
-                        • <strong>Co-Channel Interference (CCI):</strong> Minimized by maintaining strict cluster reuse distance ($Q = 4.58$)[cite: 31].<br>
+                        • <strong>Co-Channel Interference (CCI):</strong> Minimized by maintaining strict cluster reuse distance (Q = 4.58).<br>
                         • <strong>Adjacent Channel Interference (ACI):</strong> Controlled using sharp crystal bandpass filters and guard bands.<br>
                         • <strong>Power Control:</strong> Uplink/downlink adaptive power control reduces near-far effect and overall network noise floor.
                     </p>
