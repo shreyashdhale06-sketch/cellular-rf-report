@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellular Network Frequency Planning & Propagation Analysis Report</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js for RF Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="bg-indigo-600 text-white font-bold p-2.5 rounded-xl text-lg">📡</span>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Cellular RF Engineering & Propagation Report</h1>
+                    <p class="text-slate-400 text-xs">GSM 900 MHz Frequency Planning, Okumura-Hata Model & Antenna Design</p>
+                </div>
+            </div>
+            <div class="mt-4 md:mt-0 flex gap-3">
+                <span class="bg-slate-900 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-indigo-400 font-medium">City Radius: 5.0 km</span>
+                <span class="bg-slate-900 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-emerald-400 font-medium">Band: GSM 900</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+        <!-- Executive Summary KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Frequency Reuse Factor</p>
+                <h3 class="text-2xl font-black text-white mt-2">7 / 21</h3>
+                <span class="text-xs text-indigo-400 font-medium mt-1 block">Cluster Size $N = 7$</span>
+            </div>
+            <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Urban Cell Radius ($R$)</p>
+                <h3 class="text-2xl font-black text-white mt-2">0.5 km</h3>
+                <span class="text-xs text-amber-400 font-medium mt-1 block">High Capacity Density</span>
+            </div>
+            <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Suburban Cell Radius ($R$)</p>
+                <h3 class="text-2xl font-black text-white mt-2">1.5 km</h3>
+                <span class="text-xs text-emerald-400 font-medium mt-1 block">Balanced Coverage</span>
+            </div>
+            <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Co-Channel Ratio ($Q$)</p>
+                <h3 class="text-2xl font-black text-white mt-2">4.58</h3>
+                <span class="text-xs text-purple-400 font-medium mt-1 block">SIR $\approx 18.3$ dB</span>
+            </div>
+        </div>
+
+        <!-- Section 1: Network Topology & Cell Architecture -->
+        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-sm space-y-4">
+            <h2 class="text-lg font-bold text-white border-b border-slate-700 pb-3 flex items-center gap-2">
+                <span>🏙️</span> 1. Network Topology & Cell Architecture
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                For a mid-sized city spanning a <strong>5.0 km radius</strong>, the service area is modeled using a regular hexagonal grid pattern. Hexagons provide seamless coverage without overlapping or coverage gaps. To handle non-uniform traffic density across the city, hierarchical cell sizing is deployed:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+                    <h4 class="font-bold text-indigo-400 text-sm mb-1">Dense Urban Core</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius ($R$) = <strong>500 m</strong>[cite: 32]. Maximizes frequency reuse and subscriber capacity in high-rise commercial zones.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+                    <h4 class="font-bold text-emerald-400 text-sm mb-1">Suburban Residential</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius ($R$) = <strong>1.5 km</strong>. Optimized for medium subscriber density and wider coverage footprints.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+                    <h4 class="font-bold text-amber-400 text-sm mb-1">Open / Highway Area</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Cell Radius ($R$) = <strong>3.0 km</strong>. Extended range coverage with minimal terrain obstruction.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Frequency Planning & Channel Allocation -->
+        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-sm space-y-4">
+            <h2 class="text-lg font-bold text-white border-b border-slate-700 pb-3 flex items-center gap-2">
+                <span>🔢</span> 2. GSM 900 MHz Frequency Planning & Reuse
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Operating in the <strong>GSM 900 MHz band</strong> (uplink: 890–915 MHz, downlink: 935–960 MHz) with a 200 kHz channel bandwidth yields 124 total RF channels. Utilizing a <strong>7-cell frequency reuse pattern ($N=7$)</strong> with 3-sector base stations ($7 \times 3 = 21$ channel groups):
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                    <thead class="bg-slate-900 text-slate-400 uppercase text-[10px]">
+                        <tr>
+                            <th class="p-3 border border-slate-700">Cell Cluster ID</th>
+                            <th class="p-3 border border-slate-700">Assigned Channel Groups</th>
+                            <th class="p-3 border border-slate-700">Reuse Distance ($D$)</th>
+                            <th class="p-3 border border-slate-700">Co-Channel Reuse Ratio ($Q = D/R$)</th>
+                            <th class="p-3 border border-slate-700">Estimated SIR (dB)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-slate-750">
+                            <td class="p-3 border border-slate-700 font-bold text-indigo-400">Cell C1</td>
+                            <td class="p-3 border border-slate-700">Groups 1A, 1B, 1C</td>
+                            <td class="p-3 border border-slate-700">4.58 $R$</td>
+                            <td class="p-3 border border-slate-700">4.58</td>
+                            <td class="p-3 border border-slate-700 text-emerald-400 font-bold">18.3 dB</td>
+                        </tr>
+                        <tr class="hover:bg-slate-750">
+                            <td class="p-3 border border-slate-700 font-bold text-indigo-400">Cell C2</td>
+                            <td class="p-3 border border-slate-700">Groups 2A, 2B, 2C</td>
+                            <td class="p-3 border border-slate-700">4.58 $R$</td>
+                            <td class="p-3 border border-slate-700">4.58</td>
+                            <td class="p-3 border border-slate-700 text-emerald-400 font-bold">18.3 dB</td>
+                        </tr>
+                        <tr class="hover:bg-slate-750">
+                            <td class="p-3 border border-slate-700 font-bold text-indigo-400">Cell C3 - C7</td>
+                            <td class="p-3 border border-slate-700">Groups 3 through 7</td>
+                            <td class="p-3 border border-slate-700">4.58 $R$</td>
+                            <td class="p-3 border border-slate-700">4.58</td>
+                            <td class="p-3 border border-slate-700 text-emerald-400 font-bold">18.3 dB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 3: Interactive Okumura-Hata Propagation Calculator -->
+        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-sm space-y-6">
+            <h2 class="text-lg font-bold text-white border-b border-slate-700 pb-3 flex items-center gap-2">
+                <span>📉</span> 3. Okumura-Hata Path Loss & Signal Strength Calculator
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Adjust parameters below to compute path loss, received signal strength at the cell edge, and verify link margin for call maintenance.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Controls -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-4">
+                    <h3 class="font-bold text-sm text-indigo-400">Simulation Parameters</h3>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Environment Type</label>
+                        <select id="envType" class="w-full bg-slate-800 text-white text-xs rounded p-2.5 border border-slate-700">
+                            <option value="urban">Urban Area (Large City)</option>
+                            <option value="suburban">Suburban Area</option>
+                            <option value="open">Open / Rural Area</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Frequency ($f$): <span id="freqVal">900</span> MHz</label>
+                        <input type="range" id="freqInput" min="850" max="960" value="900" class="w-full accent-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Base Station Antenna Height ($h_{te}$): <span id="hteVal">30</span> m</label>
+                        <input type="range" id="hteInput" min="20" max="100" value="30" class="w-full accent-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Mobile Receiver Height ($h_{re}$): <span id="hreVal">1.5</span> m</label>
+                        <input type="range" id="hreInput" min="1" max="3" value="1.5" step="0.5" class="w-full accent-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Distance to Cell Edge ($d$): <span id="distVal">1.0</span> km</label>
+                        <input type="range" id="distInput" min="0.2" max="5.0" value="1.0" step="0.1" class="w-full accent-indigo-500">
+                    </div>
+                    <button onclick="calculateHata()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-lg text-xs transition cursor-pointer">
+                        Calculate Path Loss & RSS
+                    </button>
+                </div>
+
+                <!-- Results & Chart -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
+                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Path Loss ($L_{50}$)</span>
+                            <span id="resPathLoss" class="text-xl font-black text-indigo-400 mt-1 block">-- dB</span>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
+                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Received Power ($P_r$)</span>
+                            <span id="resRxPower" class="text-xl font-black text-emerald-400 mt-1 block">-- dBm</span>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
+                            <span class="text-[10px] uppercase font-bold text-slate-400 block">Call Status</span>
+                            <span id="resStatus" class="text-sm font-black text-amber-400 mt-2 block">--</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 relative h-64">
+                        <canvas id="pathLossChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Antenna Configuration & Radiation Pattern -->
+        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-sm space-y-4">
+            <h2 class="text-lg font-bold text-white border-b border-slate-700 pb-3 flex items-center gap-2">
+                <span>📡</span> 4. Base Station Antenna Configuration
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                To optimize spatial coverage and suppress inter-cell interference, a 3-sector antenna configuration is deployed per base station site[cite: 32].
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+                    <h4 class="font-bold text-indigo-400 text-sm mb-1">Antenna Gain & Beamwidth</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Directional panel antennas with <strong>18 dBi gain</strong> and <strong>65° horizontal half-power beamwidth (HPBW)</strong> per sector.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+                    <h4 class="font-bold text-emerald-400 text-sm mb-1">Electrical & Mechanical Tilt</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Configured with <strong>6° electrical down-tilt</strong> and <strong>2° mechanical down-tilt</strong> to confine cell footprint and prevent overshoot interference.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 font-mono text-xs bg-slate-950 p-4 rounded-xl border border-slate-700 text-indigo-300">
+                    <p class="font-bold mb-1">Sector Azimuth Layout:</p>
+                    <p>• Sector A: 000° (North)</p>
+                    <p>• Sector B: 120° (Southeast)</p>
+                    <p>• Sector C: 240° (Southwest)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Handoff Strategy & Interference Management -->
+        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-sm space-y-4">
+            <h2 class="text-lg font-bold text-white border-b border-slate-700 pb-3 flex items-center gap-2">
+                <span>🔄</span> 5. Handoff Strategy & Interference Mitigation
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300">
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-2">
+                    <h4 class="font-bold text-indigo-400 text-base">Handoff Algorithm</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Implements a <strong>Relative Signal Strength with Hysteresis and Threshold</strong> handoff mechanism. A mobile station initiates handoff to a target base station only if:
+                    </p>
+                    <p class="text-xs font-mono bg-slate-950 p-2.5 rounded text-indigo-300">
+                        RSSI_target > RSSI_serving + Hysteresis (3 dB)
+                    </p>
+                    <p class="text-xs text-slate-400">This prevents "ping-pong" handoffs at cell boundaries.</p>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-2">
+                    <h4 class="font-bold text-amber-400 text-base">Interference Mitigation</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        • <strong>Co-Channel Interference (CCI):</strong> Minimized by maintaining strict cluster reuse distance ($Q = 4.58$)[cite: 31].<br>
+                        • <strong>Adjacent Channel Interference (ACI):</strong> Controlled using sharp crystal bandpass filters and guard bands.<br>
+                        • <strong>Power Control:</strong> Uplink/downlink adaptive power control reduces near-far effect and overall network noise floor.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 border-t border-slate-700 text-center py-6 mt-12 text-slate-400 text-xs">
+        <p>Cellular RF Frequency Planning & Propagation Report • Professional Engineering Portfolio</p>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        let pathLossChart = null;
+
+        function updateSliderLabels() {
+            document.getElementById('freqVal').innerText = document.getElementById('freqInput').value;
+            document.getElementById('hteVal').innerText = document.getElementById('hteInput').value;
+            document.getElementById('hreVal').innerText = document.getElementById('hreInput').value;
+            document.getElementById('distVal').innerText = document.getElementById('distInput').value;
+        }
+
+        function calculateHata() {
+            updateSliderLabels();
+            const env = document.getElementById('envType').value;
+            const f = parseFloat(document.getElementById('freqInput').value);
+            const hte = parseFloat(document.getElementById('hteInput').value);
+            const hre = parseFloat(document.getElementById('hreInput').value);
+            const d = parseFloat(document.getElementById('distInput').value);
+
+            // Okumura-Hata propagation model formulas
+            let a_hre = (1.1 * Math.log10(f) - 0.7) * hre - (1.56 * Math.log10(f) - 0.8);
+            let c_urban = 69.55 + 26.16 * Math.log10(f) - 13.82 * Math.log10(hte) - a_hre;
+            let b_urban = 44.9 - 6.55 * Math.log10(hte);
+
+            let L50 = c_urban + b_urban * Math.log10(d);
+
+            if (env === 'suburban') {
+                L50 = L50 - 2 * Math.pow((Math.log10(f / 28)), 2) - 5.4;
+            } else if (env === 'open') {
+                L50 = L50 - 4.78 * Math.pow(Math.log10(f), 2) + 18.33 * Math.log10(f) - 40.94;
+            }
+
+            // Link Budget calculation
+            const P_tx = 43; // dBm (20W base station transmitter)
+            const G_tx = 18; // dBi
+            const G_rx = 0;  // dBi (mobile antenna)
+            const L_cable = 2; // dB
+
+            const P_rx = P_tx + G_tx + G_rx - L_cable - L50;
+
+            document.getElementById('resPathLoss').innerText = L50.toFixed(1) + ' dB';
+            document.getElementById('resRxPower').innerText = P_rx.toFixed(1) + ' dBm';
+
+            const statusEl = document.getElementById('resStatus');
+            if (P_rx >= -100) {
+                statusEl.innerText = 'Call Maintained (Strong)';
+                statusEl.className = 'text-sm font-black text-emerald-400 mt-2 block';
+            } else if (P_rx >= -110) {
+                statusEl.innerText = 'Call Maintained (Edge/Handover Needed)';
+                statusEl.className = 'text-sm font-black text-amber-400 mt-2 block';
+            } else {
+                statusEl.innerText = 'Call Dropped (Coverage Hole)';
+                statusEl.className = 'text-sm font-black text-rose-400 mt-2 block';
+            }
+
+            updateChart(env, f, hte, hre);
+        }
+
+        function updateChart(env, f, hte, hre) {
+            let distances = [0.2, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0];
+            let losses = distances.map(d => {
+                let a_hre = (1.1 * Math.log10(f) - 0.7) * hre - (1.56 * Math.log10(f) - 0.8);
+                let c_urban = 69.55 + 26.16 * Math.log10(f) - 13.82 * Math.log10(hte) - a_hre;
+                let b_urban = 44.9 - 6.55 * Math.log10(hte);
+                let l = c_urban + b_urban * Math.log10(d);
+                if (env === 'suburban') l -= 2 * Math.pow((Math.log10(f / 28)), 2) - 5.4;
+                if (env === 'open') l -= 4.78 * Math.pow(Math.log10(f), 2) + 18.33 * Math.log10(f) - 40.94;
+                return Number(l.toFixed(1));
+            });
+
+            const ctx = document.getElementById('pathLossChart').getContext('2d');
+            if (pathLossChart) pathLossChart.destroy();
+
+            pathLossChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: distances.map(d => d + ' km'),
+                    datasets: [{
+                        label: 'Okumura-Hata Path Loss (dB)',
+                        data: losses,
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' }, title: { display: true, text: 'Path Loss (dB)', color: '#94a3b8' } }
+                    },
+                    plugins: { legend: { labels: { color: '#f1f5f9' } } }
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', calculateHata);
+        ['envType', 'freqInput', 'hteInput', 'hreInput', 'distInput'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateHata);
+        });
+    </script>
+</body>
+</html>
